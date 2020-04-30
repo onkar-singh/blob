@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+  </head>
+  <body>
+ 
+
+<img id="scream" src="https://image.slidesharecdn.com/paginas-de-matematicas-11671/85/paginas-de-matematicas-1-320.jpg" alt="The Scream" >
+
+<canvas id="myCanvas" style="border:1px solid #d3d3d3;"></canvas>
+
+<script>
+var img = document.getElementById("scream");
+  var c = document.getElementById("myCanvas");
+
+	c.width  = img.width;
+    c.height = img.height;
+  var ctx = c.getContext("2d");
+  
+  ctx.drawImage(img,0,0);
+  
+  ctx.width = img.clientWidth;
+  ctx.height = img.clientHeight;
+
+c.toBlob(function(blob) {
+  var newImg = document.createElement('img'),
+      url = URL.createObjectURL(blob);
+
+  newImg.onload = function() {
+    // no longer need to read the blob so it's revoked
+    URL.revokeObjectURL(url);
+  };
+
+  newImg.src = url;
+  document.body.appendChild(newImg);
+});
+
+var doc = new jsPDF();
+doc.setFontSize(22);
+doc.text(20, 20, 'This is a title');
+
+doc.setFontSize(16);
+doc.text(20, 30, 'This is some normal sized text underneath.');
+
+//doc.save('a4.pdf');
+</script>
+</body>
+</html>
